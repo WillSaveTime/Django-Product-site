@@ -1,0 +1,59 @@
+<ul id="slide-out" class="sidenav sidenav-fixed">
+    <li>
+        <a class="subheader">General</a>
+    </li>
+    <li>
+        <a href="{% url "dashboard-home" pyme_code=pyme.code %}" class="waves-effect"><i class="material-icons">home</i>Inicio</a>
+    </li>
+    <li>
+        <a href="/calendar" class="waves-effect"><i class="material-icons">calendar_today</i>Calendario</a>
+    </li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li>
+        <a class="subheader">Control</a>
+    </li>
+    <li>
+        <a href="{% url "dashboard-products" pyme_code=pyme.code %}" class="waves-effect"><i class="material-icons">view_in_ar</i>Productos</a>
+    </li>
+    <li>
+        <a href="/inventory" class="waves-effect"><i class="material-icons">inventory_2</i>Inventario</a>
+    </li>
+    <li>
+        <a href="/orders" class="waves-effect"><i class="material-icons">card_giftcard</i>Pedidos</a>
+    </li>
+    <li>
+        <a href="/shipments" class="waves-effect"><i class="material-icons">outbound</i>Envios</a>
+    </li>
+    <li>
+        <a href="/clients" class="waves-effect"><i class="material-icons">accessibility</i>Clientes</a>
+    </li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li>
+        <a class="subheader">Estadisticas</a>
+    </li>
+    <li>
+        <a href="/social_networks" class="waves-effect"><i class="material-icons">favorite</i>Redes Sociales</a>
+    </li>
+    <li>
+        <a href="/sales" class="waves-effect"><i class="material-icons">attach_money</i>Ventas</a>
+    </li>
+    <li>
+        <a href="/accountability" class="waves-effect"><i class="material-icons">stacked_bar_chart</i>Contabilidad</a>
+    </li>
+</ul>
+<style>
+    .sidenav {
+        width: 250px;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.sidenav');
+        var options = {}
+        var instances = M.Sidenav.init(elems, options);
+    });
+</script>

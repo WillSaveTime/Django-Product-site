@@ -1,0 +1,112 @@
+{% extends "./landing.html" %}
+{% block content %}
+
+<div class="parallax-container">
+    <div class="parallax"><img class="parallax-img" src="https://image.shutterstock.com/image-photo/serious-furniture-designer-carefully-sanding-600w-382064236.jpg"></div>
+</div>
+<div class="section white">
+    <div class="row container">
+        <h3 id="who_are_we" class="header">Que somos?</h3>
+        <p class="grey-text text-darken-3 lighten-3">MiPyme es una plataforma web de administracion de negocios creada y dirigida especificamente a peque;os emprendimientos de Costa Rica. Desde aqui, puedes manejar tus productos, pedidos, clientes, finanzas y mucho mas sin necesidad de aplicaciones extra o archivos de excel.</p>
+    </div>
+</div>
+<div class="parallax-container">
+    <div class="parallax"><img class="parallax-img" src="https://images.unsplash.com/photo-1553649033-3fbc8d0fa3cb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2250&q=80"></div>
+</div>
+<div class="section white">
+    <div class="row container">
+        <h3 id="features" class="header">Caracteristicas</h3>
+        <p class="grey-text text-darken-3 lighten-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+</div>
+<div class="parallax-container">
+    <div class="parallax"><img class="parallax-img"
+            src="https://images.unsplash.com/photo-1553649033-3fbc8d0fa3cb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2250&q=80">
+    </div>
+</div>
+
+<!-- <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <br><br>
+        <h1 class="header center orange-text">Mi Pyme</h1>
+        <div class="row center">
+            <h5 class="header col s12 light">Lleva tu peque;a o mediana empresa al proximo nivel</h5>
+        </div>
+        <div class="row center">
+            <a href="http://materializecss.com/getting-started.html" id="download-button"
+                class="btn-large waves-effect waves-light orange">Get Started</a>
+        </div>
+        <br><br>
+
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="section">
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
+                    <h5 class="center">Speeds up development</h5>
+
+                    <p class="light">We did most of the heavy lifting for you to provide a default stylings that
+                        incorporate our custom components. Additionally, we refined animations and transitions to
+                        provide a smoother experience for developers.</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+                    <h5 class="center">User Experience Focused</h5>
+
+                    <p class="light">By utilizing elements and principles of Material Design, we were able to create a
+                        framework that incorporates components and animations that provide more feedback to users.
+                        Additionally, a single underlying responsive system across all platforms allow for a more
+                        unified user experience.</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
+                    <h5 class="center">Easy to work with</h5>
+
+                    <p class="light">We have provided detailed documentation as well as specific code examples to help
+                        new users get started. We are also always open to feedback and can answer any questions a user
+                        may have about Materialize.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br><br>
+</div> -->
+
+<style>
+    p {
+        font-size: medium;
+    }
+    .parallax-img {
+        filter: blur(6px);
+        -webkit-filter: blur(6px);
+    }
+    .section {
+        padding-top: 80px;
+        padding-bottom: 80px;
+        box-shadow: 0 1px 0 0 dimgray!important;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.parallax');
+        var options = {}
+        var instances = M.Parallax.init(elems, options);
+    });
+</script>
+{% endblock content %}

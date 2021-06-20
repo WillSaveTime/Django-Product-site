@@ -1,0 +1,138 @@
+<body>
+    <div class="col s12 m12 l10 offset-l1 xl10 offset-xl1 white round-corners" style="margin-top:10px; margin-bottom: 10px;">
+        <form action="login" method="post">
+            {% csrf_token %}
+
+            <div class="section">
+                <h3>Iniciar Sesión</h3>
+            </div>
+            <div>
+                <div class="input-field col s12 m12 pull-s1">
+                    <i class="material-icons prefix hide-on-small-only" style="cursor: default;">perm_identity</i>
+                    <input id="userInput" type="text" name="username" class="validate" autocomplete="off">
+                    <label for="userInput">Usuario</label>
+                </div>
+                <div class="input-field col s12 m12 pull-s1">
+                    <i class="material-icons prefix hide-on-small-only" style="cursor: default;">security</i>
+                    <input id="passInput" type="password" name="password" class="validate" autocomplete="off">
+                    <label for="passInput">Contraseña</label>
+                </div>
+            </div>
+            <div class="section col s12">
+                <div class="container">
+                    <button class="col light-blue accent-3 btn waves-effect s12 m12" style="margin: 14px 0">Iniciar Sesión</button>
+                </div>
+            </div>
+            {% for message in messages %}
+            <div class="col s12">
+                <p class="alert animated shake">
+                    {{ message }}
+                </p>
+            </div>
+            {% endfor %}
+            <div class="section">
+                <p>¿Olvidaste tu contraseña?</p>
+            </div>
+        </form>
+
+        <div class="section col s12">
+            <div class="divider" style="background: #d3d3d3;"></div>
+            <div class="container">
+                <button class="col light-blue accent-3 btn waves-effect s12 m12" style="margin: 14px 0" onclick="redirLog()">Crear cuenta nueva</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<style>
+    /* Input-field style */
+    
+    .alert {
+        color: firebrick;
+        text-decoration: underline;
+    }
+    
+    .animated {
+        animation-duration: 1s;
+        animation-fill-mode: both;
+    }
+    
+    @keyframes shake {
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+            transform: translateX(-10px);
+        }
+        20%,
+        40%,
+        60%,
+        80% {
+            transform: translateX(10px);
+        }
+    }
+    
+    .shake {
+        animation-name: shake;
+    }
+    
+    h3 {
+        font-size: min(40px, calc(25px + 1vw));
+    }
+    
+    .round-corners {
+        border-radius: 5px;
+    }
+    
+    .input-field {
+        display: flex;
+    }
+    
+    .input-field label {
+        color: #000;
+        font-size: clamp(1rem, 2.5vw, 11px);
+    }
+    
+    .input-field input:focus+label {
+        color: transparent !important;
+    }
+    
+    .input-field input:focus {
+        border-bottom: 1px solid #000 !important;
+        box-shadow: 0 1px 0 0 #b9b9b9!important;
+    }
+    
+    .input-field input.valid {
+        border-bottom: 1px solid #000;
+        box-shadow: 0 1px 0 0 #000;
+    }
+    
+    .input-field input.invalid {
+        border-bottom: 1px solid #000;
+        box-shadow: 0 1px 0 0 #000;
+    }
+    
+    .input-field .prefix.active {
+        color: #000;
+    }
+    /* Round corners for pagination bar */
+    
+    .left-round {
+        border-radius: 3px 0px 0px 3px;
+    }
+    
+    .right-round {
+        border-radius: 0px 3px 3px 0px;
+    }
+    
+    .pagination li a {
+        padding-left: min(10px, calc(.3vw + 5px));
+        padding-right: min(10px, calc(.3vw + 5px));
+    }
+</style>

@@ -1,0 +1,13 @@
+<body>
+    <div class="col s12 m6 offset-m3 section z-depth-3" style="margin-bottom: 20px; padding: 10px; border-radius: 25px;">
+        <h2 class="resize-text">{{pyme.name}}</h2>
+        <a class="waves-effect waves-light btn light-blue accent-3" style="margin: 10px 0;" href={% url "dashboard-home" pyme_code=pyme.code %}>Accessar a {{pyme.name}}</a>
+        <div class="divider"></div>
+    </div>
+</body>
+
+<style>
+    .resize-text {
+        font-size: min( 49.84px, calc(30px + 1vw));
+    }
+</style>

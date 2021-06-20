@@ -1,0 +1,27 @@
+{% extends "../base.html" %}
+
+{% block section %}
+{% include './sidenav.html' %}
+<main>
+    {% include './navbar.html' %}
+    <div id="content">
+        {% block content %}{% endblock content %}
+    </div>
+</main>
+
+<style>
+    main {
+        padding-left: 250px;
+    }
+
+    @media only screen and (max-width: 992px) {
+        main {
+            padding-left: 0;
+        }
+    }
+
+    #content {
+        padding: 15px
+    }
+</style>
+{% endblock section %}

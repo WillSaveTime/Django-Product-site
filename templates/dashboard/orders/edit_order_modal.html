@@ -1,0 +1,114 @@
+<div id="edit_order_modal" class="modal">
+    <div class="modal-content">
+        <h4><i class="material-icons">view_in_ar</i> Agregar pedido</h4>
+        <br>
+        <ul class="collapsible">
+            <li class="active">
+                <div class="collapsible-header">
+                    <i class="material-icons">accessibility</i>Cliente
+                </div>
+                <div class="collapsible-body">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <input id="first_name" type="text" class="validate" required />
+                                <label for="first_name">Nombre completo (requerido)</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input id="phone_number" type="number" class="validate" />
+                                <label for="phone_number">Numero telefonico</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input id="email" type="text" class="validate" required />
+                                <label for="email">Correo electronico</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input id="last_names" type="number" class="validate" />
+                                <label for="last_names">Numero de cedula</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+            <li class="active">
+                <div class="collapsible-header">
+                    <i class="material-icons">view_in_ar</i>Productos
+                </div>
+                <div class="collapsible-body">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <input id="category" type="text" class="validate" />
+                                <label for="category">Producto</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <div class="switch">
+                                    <label>
+                                        Por fabricar
+                                        <input type="checkbox">
+                                        <span class="lever"></span>
+                                        En inventario
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons">outbound</i>Envio
+                </div>
+                <div class="collapsible-body">
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons">attach_money</i>Pago
+                </div>
+                <div class="collapsible-body">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <input id="manufacturing_cost" type="text" class="validate" />
+                                <label for="manufacturing_cost">Costo de manufactura</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input id="manufacturing_days" type="text" class="validate" />
+                                <label for="manufacturing_days">Dias habiles</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <textarea id="manufacturing_requirements"
+                                    class="materialize-textarea validate"></textarea>
+                                <label for="manufacturing_requirements">Requisitos de manufactura</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <textarea id="manufacturing_steps" class="materialize-textarea validate"></textarea>
+                                <label for="manufacturing_steps">Pasos de manufactura</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agregar</a>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.collapsible');
+        var options = {
+            accordion: false,
+        }
+        var instances = M.Collapsible.init(elems, options);
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.modal');
+        var options = {
+        }
+        var instances = M.Modal.init(elems, options);
+    });
+</script>

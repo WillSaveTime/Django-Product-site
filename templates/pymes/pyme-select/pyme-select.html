@@ -1,0 +1,15 @@
+{% extends "./base.html" %} {% block pymeselect %}
+
+<body>
+    <div class="col s12">
+        <div class="center" style="margin-top: 10px;">
+            {% for pyme in pymes %} {% include "./pyme-card.html" with pyme=pyme %} {% endfor %}
+        </div>
+    </div>
+    <div class="col s12 center center-align">
+        <a class="waves-effect waves-light btn-large light-blue accent-3" style="margin: 10px 0;" href='/logout'>Cerrar sesión</a>
+    </div>
+
+</body>
+
+{% endblock pymeselect %}

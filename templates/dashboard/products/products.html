@@ -1,0 +1,15 @@
+{% extends "../dashboard.html" %}
+
+{% block content %} 
+{% include './product_modal.html' %}
+<div class="row section">
+    <div class="col s12">
+        <h2 class="light-blue-text text-accent-3 col s6">Productos</h2>
+        
+        <div class="s12">
+            {% include "./product_table.html" with prod_list=products %}
+        </div>
+        
+    </div>
+</div>
+{% endblock content %}

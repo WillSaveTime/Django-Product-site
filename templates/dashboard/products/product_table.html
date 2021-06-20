@@ -1,0 +1,479 @@
+<body>
+{% load templatetags %}
+{% for prod in prod_list %}
+<!-- Edit Modal -->
+                {% include "./product_edit_modal.html" with product=prod counter=forloop.counter%}
+                <!-- Edit Modal ended -->
+{% endfor %}
+    <div class="s12">
+        <div class="col s6"></div>
+        <div class="input-field col s12 m5 no-margins">
+            <i class="material-icons prefix" style="cursor: default;">search</i>
+            <input id="searchInput" type="text" class="validate" onkeydown="search()" autocomplete="off">
+            <label for="searchInput">Ingrese su busqueda</label>
+        </div>
+        <button class="col light-blue accent-3 btn waves-effect s12 m1 no-margins button-font" style="margin: 14px 0" onclick="clickSearch()">Buscar</button>
+        
+        <table id="product-table" class="card striped display centered s6 m12">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">
+                        <div id="nameCol" class="vertical-center">
+                            <a href="javascript:sortBy('name-Asc', 'name-Des');">Nombre</a>
+                        </div>
+                    </th>
+                    <th style="width: 30%;">
+                        <div id="priceCol" class="vertical-center">
+
+                            <a href="javascript:sortBy('price-Asc', 'price-Des');">Precio</a>
+                        </div>
+                    </th>
+                    <th style="width: 30%;">
+                        <div id="catCol" class="vertical-center">
+
+                            <a href="javascript:sortBy('category-Asc', 'category-Des');">Categoria</a>
+                        </div>
+                    </th>
+                    <th id="utilCol" style="width: 10%;">
+                        <div id="catCol" class="vertical-center">
+                            <a class="material-icons modal-trigger" href="#add_product_modal" onclick="clearAddProductModalValues()">add</a>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Product iteration-->
+                {% for product in prod_list %}
+                
+
+                <!-- Delete Modal -->
+                <div id="deleteProductModal{{forloop.counter}}" class="modal">
+                <div class="modal-content">
+                    <form action="/product/delete" method="post">
+                    {% csrf_token %}
+                        <h4>Delete Product</h4>
+                        <input type="hidden" name="productId" value="{{product.id}}">
+                        <div class="input-field col s6">
+                            <input id="last_name" name="newProductName" type="text" class="validate">
+                            <label for="last_name">nuevos productos</label>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="modal-close waves-effect waves-green btn-flat">Delete</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+                <!-- Delete Modal ended -->
+
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.base_price }}</td>
+
+                    {% for category in productCategories %}
+                        {% if category.name|loadJson|getFromDict:"productId" == product.id %}
+                            <td>{{ category.name|loadJson|getFromDict:"category1" }}</td>
+                        {% endif %}
+                    
+                    {% endfor %}
+                    <td>
+                        <div style="display:flex;gap:0.8rem;">
+                            <!-- Modal Trigger For Edit -->
+                        <button class="small btn material-icons modal-trigger" href="#edit_product_modal{{forloop.counter}}">edit</button>
+
+                          <!-- Modal Trigger For Delete -->
+                        {% comment %} <a class="small material-icons modal-trigger" href="#deleteProductModal{{forloop.counter}}">delete</a> {% endcomment %}
+                        <form action="/product/delete" method="post">
+                        {% csrf_token %}
+                            <input type="hidden" name="productId" value="{{product.id}}">
+                            <button type="submit" class="btn small material-icons modal-trigger">delete</button>
+                        </form>
+                        <button class="small btn material-icons" onclick="getProductImages({{product.id}})">photo</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if prod_list.has_other_pages %}
+    <pagcont class="col dynamic-align" style="width: 100%;">
+        <div class="dynamic-align">
+            <ul class="pagination">
+                {% if prod_list.has_previous %}
+                <li class="waves-effect"><a href="javascript:changePage({{ prod_list.previous_page_number }});">&lsaquo;</a></li>
+                {% else %}
+                <li class="disabled"><a>&lsaquo;</a></li>
+                {% endif %} {% for i in prod_list.paginator.page_range %} {% if prod_list.number == i %}
+                <li class="active light-blue active-3"><a> {{i}} </a></li>
+                {% else %}
+                <li class="waves-effect"><a href="javascript:changePage({{ i }});"> {{i}} </a></li>
+                {% endif %} {% endfor %} {% if prod_list.has_next %}
+                <li class="waves-effect"><a href="javascript:changePage({{ prod_list.next_page_number }});">&rsaquo;</a></li>
+                {% else %}
+                <li class="disabled"><a>&rsaquo;</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </pagcont>
+    {% endif %}
+    {% comment %} Dialog for edit {% endcomment %}
+
+
+
+
+
+
+{% load widget_tweaks %}
+<div id="viewProductImagesModals"></div>
+
+</body>
+
+<script>
+    // Showing messages
+    {% for message in messages %}
+            {% if message.level == 30 %}
+                 M.toast({html: '{{message}}', classes:"red darken-1"})
+            {% endif %}
+    {% endfor %}
+
+    // Initialize carousels
+    function initCarousels(){
+        var elems = document.querySelectorAll('.carousel');
+        var instances = M.Carousel.init(elems, {fullWidth:true, indicators:true});
+    };
+
+    function addParam(v) {
+
+        window.location.search += v;
+
+    }
+
+    function updateURLParameter(url, param, paramVal) {
+        var TheAnchor = null;
+        var newAdditionalURL = "";
+        var tempArray = url.split("?");
+        var baseURL = tempArray[0];
+        var additionalURL = tempArray[1];
+        var temp = "";
+
+        if (additionalURL) {
+            var tmpAnchor = additionalURL.split("#");
+            var TheParams = tmpAnchor[0];
+            TheAnchor = tmpAnchor[1];
+            if (TheAnchor)
+                additionalURL = TheParams;
+
+            tempArray = additionalURL.split("&");
+
+            for (var i = 0; i < tempArray.length; i++) {
+                if (tempArray[i].split('=')[0] != param) {
+                    newAdditionalURL += temp + tempArray[i];
+                    temp = "&";
+                }
+            }
+        } else {
+            var tmpAnchor = baseURL.split("#");
+            var TheParams = tmpAnchor[0];
+            TheAnchor = tmpAnchor[1];
+
+            if (TheParams)
+                baseURL = TheParams;
+        }
+
+        if (TheAnchor)
+            paramVal += "#" + TheAnchor;
+
+        var rows_txt = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newAdditionalURL + rows_txt;
+    }
+
+    function sortBy(paramA, paramB) {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        var url = window.location.href;
+
+        var sortBy = urlParams.get("sortBy");
+
+        if (sortBy == paramA) {
+            url = updateURLParameter(url, "sortBy", paramB);
+            window.location.href = url;
+        } else if (sortBy == paramB) {
+            url = updateURLParameter(url, "sortBy", paramA);
+            window.location.href = url;
+        } else {
+            if (sortBy) {
+                url = updateURLParameter(url, "sortBy", paramA);
+                window.location.href = url;
+
+            } else if (window.location.search) {
+                addParam("&sortBy=" + paramA);
+            } else {
+                addParam("sortBy=" + paramA);
+            }
+        }
+
+    }
+
+    function changePage(pageNum) {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        var url = window.location.href;
+
+        var page = urlParams.get("page");
+
+        if (page) {
+            url = updateURLParameter(url, "page", pageNum);
+            window.location.href = url;
+        } else {
+            if (window.location.search) {
+                addParam("&page=" + pageNum);
+            } else {
+                addParam("page=" + pageNum);
+            }
+        }
+
+    }
+
+    function changeSearchValue(searchValue) {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        var url = window.location.href;
+
+        var value = urlParams.get("search");
+
+
+        if (value || value === "") {
+            url = updateURLParameter(url, "search", searchValue);
+            window.location.href = url;
+        } else {
+            if (window.location.search) {
+                addParam("&search=" + searchValue);
+            } else {
+                addParam("search=" + searchValue);
+            }
+        }
+
+    }
+
+    function search() {
+        if (event.key === 'Enter') {
+            var value = document.getElementById("searchInput").value;
+            changeSearchValue(value);
+        }
+    }
+
+    function clickSearch() {
+        var value = document.getElementById("searchInput").value;
+        changeSearchValue(value);
+    }
+
+    function addArrow() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const sortBy = urlParams.get("sortBy");
+        if (sortBy == "name-Asc") {
+            var col = document.getElementById("nameCol");
+
+            col.innerHTML += '<i class="tiny material-icons arrow">arrow_upward</i>'
+
+        } else if (sortBy == "name-Des") {
+            var col = document.getElementById("nameCol");
+
+            col.innerHTML += '<i class="tiny material-icons arrow">arrow_downward</i>'
+
+        } else if (sortBy == "price-Asc") {
+            var col = document.getElementById("priceCol");
+
+            col.innerHTML += '<i class="tiny material-icons arrow">arrow_upward</i>'
+
+        } else if (sortBy == "price-Des") {
+            var col = document.getElementById("priceCol");
+
+            col.innerHTML += '<i class="tiny material-icons arrow">arrow_downward</i>'
+
+        } else if (sortBy == "category-Asc") {
+            var col = document.getElementById("catCol");
+
+            col.innerHTML += '<i class="tiny material-icons arrow">arrow_upward</i>'
+
+        } else if (sortBy == "category-Des") {
+            var col = document.getElementById("catCol");
+
+            col.innerHTML += '<i class="tiny material-icons arrow">arrow_downward</i>'
+
+        }
+    }
+
+    addArrow();
+
+function clearAddProductModalValues(){
+    // Array of tags
+    let items = ["input", "textarea"];
+
+
+    // Get tag from items one by one
+    for (let item of items){
+        // Clear values of current tag
+        for (let tag of document.querySelector("#add_product_modal").querySelector("form").querySelectorAll(item)){
+            if (tag.type != "submit" && tag.type != "hidden" && tag.value != ""){
+                tag.value = "";
+                tag.parentElement.querySelector(`label[for=${tag.id}]`).classList.remove("active");
+            }
+        }
+    } 
+ 
+}
+
+// function to get images of a product
+function getProductImages(productId){
+
+    // if the modal not created aleready then send xhr request and create the modal
+
+    if (document.querySelector(`#viewProductImagesModal${productId}`) == null){
+        let xhr = new XMLHttpRequest()
+        xhr.open("post", '/product/getProductImages');
+
+        let getProductImagesData = {"productId":productId}
+
+        let headers = {"X-CSRFToken":document.querySelector("input[name=csrfmiddlewaretoken]").value, "Content-type":"application/json"}
+
+        for (let key in headers){
+            xhr.setRequestHeader(key, headers[key]);
+        }
+
+        xhr.onload = function(){        
+            let carouselHtml = `<div class="carousel carousel-slider">`;
+
+            JSON.parse(this.responseText).forEach((src, index)=>{
+
+            carouselHtml += `
+                    <a class="carousel-item" href="#carousel-item-${productId}-${index}!"><img src="/media/${src}"></a>`;
+            });
+
+            carouselHtml += "</div>";
+
+            let modalHtml = `<div id="viewProductImagesModal${productId}" class="modal">
+    {% comment %} {% url "dashboard-products" pyme_code=pyme.code %} {% endcomment %}
+        
+            {% csrf_token %}
+            <div class="modal-content">
+                    <h4 class="light-blue darken-1" style="
+    color: #fff;
+    padding: 1rem;
+">Ver fotos de productos</h4>
+                    ${carouselHtml}
+                
+            </div>
+    </div>`;
+
+            document.querySelector("#viewProductImagesModals").innerHTML += modalHtml;
+
+            // Initializing the created modal
+            let modalElems = document.querySelectorAll('.modal');
+            let modalInstances = M.Modal.init(modalElems);
+
+            let modal = document.querySelector(`#viewProductImagesModal${productId}`)
+            let instance = M.Modal.getInstance(modal);
+            instance.open();
+
+            // Initializing the created carousel
+            let elems = document.querySelectorAll('.carousel');
+            let instances = M.Carousel.init(elems, {fullWidth:true, indicators:true});
+        }
+
+        xhr.send(JSON.stringify(getProductImagesData));
+    }
+    // If the modal is aleready created then open it
+    else{
+       let createdModalInstance = M.Modal.getInstance(document.querySelector(`#viewProductImagesModal${productId}`));
+        createdModalInstance.open();
+
+        // Initializing the carousel
+        let elems = document.querySelectorAll('.carousel');
+        let instances = M.Carousel.init(elems, {fullWidth:true, indicators:true});
+    }
+
+}
+</script>
+
+<style>
+    @media only screen and (max-width: 768px) {
+        .dynamic-align {
+            display: flex;
+            justify-content: center;
+        }
+        .no-margins {
+            margin: 0 0 0 0 !important;
+        }
+    }
+    
+    @media only screen and (min-width: 769px) {
+        .dynamic-align {
+            float: right;
+        }
+    }
+    
+    .button-font {}
+    
+    .vertical-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .arrow {
+        padding-left: 10px;
+    }
+    
+    i:hover {
+        cursor: pointer;
+    }
+    /* Removes original pagination bar shadow */
+    /* Input-field style */
+    
+    .input-field {
+        display: flex;
+    }
+    
+    .input-field label {
+        color: #000;
+        font-size: clamp(1rem, 2.5vw, 11px);
+    }
+    
+    .input-field input[type=text]:focus+label {
+        color: transparent !important;
+    }
+    
+    .input-field input[type=text]:focus {
+        border-bottom: 1px solid #000 !important;
+        box-shadow: 0 1px 0 0 #b9b9b9!important;
+    }
+    
+    .input-field input[type=text].valid {
+        border-bottom: 1px solid #000;
+        box-shadow: 0 1px 0 0 #000;
+    }
+    
+    .input-field input[type=text].invalid {
+        border-bottom: 1px solid #000;
+        box-shadow: 0 1px 0 0 #000;
+    }
+    
+    .input-field .prefix.active {
+        color: #000;
+    }
+    /* Round corners for pagination bar */
+    
+    .left-round {
+        border-radius: 3px 0px 0px 3px;
+    }
+    
+    .right-round {
+        border-radius: 0px 3px 3px 0px;
+    }
+    
+    .pagination li a {
+        padding-left: min(10px, calc(.3vw + 5px));
+        padding-right: min(10px, calc(.3vw + 5px));
+    }
+</style>

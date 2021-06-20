@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Compiled and minified CSS -->
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Materialize compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <!-- Simple DataTables -->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+
+    <title>Mi Pyme</title>
+</head>
+
+<body>
+    <div>
+        {% include './nav.html' %}
+        <div id="content" class="row">
+            {% block pymeselect %}{% endblock pymeselect %}
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
+    
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        margin: 0px;
+    }
+    
+    main {
+        padding-left: 250px;
+    }
+    
+    @media only screen and (max-width: 992px) {
+        main {
+            padding-left: 0;
+        }
+    }
+    
+    #content {
+        padding: 15px
+    }
+</style>

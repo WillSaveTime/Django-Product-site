@@ -1,0 +1,150 @@
+{% comment %} Dialog for edit {% endcomment %}
+
+
+
+
+
+
+{% load widget_tweaks %}
+<div id="add_product_modal" class="modal">
+{% comment %} {% url "dashboard-products" pyme_code=pyme.code %} {% endcomment %}
+    <form action="/product/addProduct" id="add_product_form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-content">
+            <h4><i class="material-icons">view_in_ar</i> Agregar producto</h4>
+            <br>
+            <ul class="collapsible">
+                <li class="active">
+                    <div class="collapsible-header">
+                        <i class="material-icons">description</i>Informacion
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                {% render_field product_form.name %}
+                                <label for="id_name">Nombre (requerido)</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                {% render_field product_form.base_price %}
+                                <label for="id_base_price">Precio base</label>
+                            </div>
+                            <div class="input-field col s12">
+                                {% render_field product_form.description %}
+                                <label for="id_description">Descripcion</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">view_list</i>Categoria
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <input id="category" name="category" type="text" class="validate required" />
+                                <label for="category">Categoria principal</label>
+                            </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">view_list</i>Categoria
+                    </div>
+                    <div class="collapsible-body">
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <input id="category2" name="category2" type="text" class="validate" />
+                                    <label for="category2">Categoria principal</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <input id="subcategory" type="text" name="subcategory" class="validate" />
+                                    <label for="subcategory">Sub categoria</label>
+                                </div>
+                            </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">image</i>Fotos
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="add-photo">
+                            <input type="file" name="photo1" id="photo1" hidden>
+                            <label for="photo1" class="btn"><i class="material-icons">add_a_photo</i></label>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">image</i>Fotos
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="add-photo">
+                            <input type="file" name="photo2" id="photo2" hidden>
+                            <label for="photo2" class="btn"><i class="material-icons">add_a_photo</i></label>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">list_alt</i>Especificaciones
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="key" name="specificationKey" type="text" class="validate">
+                                <label for="key" class="">Especificaciones</label>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">perm_data_setting</i>Manufactura
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <input id="manufacturing_cost" name="base_cost" type="number" class="validate" />
+                                <label for="manufacturing_cost">Costo de manufactura</label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <input id="manufacturing_days" name="estimated_days" type="number" class="validate" />
+                                <label for="manufacturing_days">Dias habiles</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <textarea id="manufacturing_requirements" class="materialize-textarea validate" name="requirements"></textarea>
+                                <label for="manufacturing_requirements">Requisitos de manufactura</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <textarea id="manufacturing_steps" class="materialize-textarea validate" name="instructions"></textarea>
+                                <label for="manufacturing_steps">Pasos de manufactura</label>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+            <input type="submit" class="modal-action waves-effect waves-green btn-flat"/>
+        </div>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.collapsible');
+        var options = {
+            accordion: false,
+        }
+        var instances = M.Collapsible.init(elems, options);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var options = {}
+        var instances = M.Modal.init(elems, options);
+    });
+
+
+
+</script>

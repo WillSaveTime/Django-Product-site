@@ -1,0 +1,17 @@
+{% extends "../landing.html" %}
+{% block content %}
+
+<div class="container row  round-corners">
+    <div class="col s12 m12 l10 offset-l1 xl8 offset-xl2 center light-blue accent-1 round-corners z-depth-5">
+        <div class="col s12 m12" style="padding: 10px;">
+            {% include "./login-form.html" %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .round-corners {
+        border-radius: 5px;
+    }
+</style>
+{% endblock content %}
